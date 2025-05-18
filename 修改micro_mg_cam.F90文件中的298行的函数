@@ -1,0 +1,22 @@
+function micro_mg_cam_implements_cnst(name) result(found)
+  ! Return true if specified constituent is implemented by the microphysics package
+  use constituents, only: cnst_add, cnst_get_ind
+  use abortutils,   only: endrun
+  
+  implicit none
+  character(len=*), intent(in) :: name     ! constituent name
+  logical :: found                         ! return value
+  
+  ! Local variables
+  integer :: index
+  logical :: abort_flag = .false.  ! 不终止程序
+  
+  !-----------------------------------------------------------------------
+  found = .false.
+  
+  ! 调用标准 CESM 接口查询成分是否存在
+  call cnst_get_ind(trim(name), index, abort_flag)
+  
+  ! index > 0 表示该成分存在
+  if (index > 0) found = .true.
+end function micro_mg_cam_implements_cnst
