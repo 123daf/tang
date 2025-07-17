@@ -1,0 +1,18 @@
+start water
+# 设置并行参数
+set nproc 4    # 使用4个MPI进程
+set threads 2   # 每个进程2个线程 (混合并行)
+memory total 2000 mb  # 增加内存分配
+
+geometry
+  O 0.00000000 0.00000000 -0.11720000
+  H -0.75700000 0.00000000 0.46880000
+  H 0.75700000 0.00000000 0.46880000
+end
+
+basis
+  * library 6-31G*  # 使用更大基组
+end
+
+# 启用并行任务
+task dft optimize  # 含几何优化的DFT计算

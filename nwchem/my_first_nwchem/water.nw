@@ -1,0 +1,14 @@
+start water
+memory total 500 mb       # 修正语法 + 适配 WSL2 限制
+
+geometry
+  O  0.00000000  0.00000000  0.00000000
+  H  0.75700000  0.58600000  0.00000000
+  H -0.75700000  0.58600000  0.00000000
+end
+
+basis
+  * library sto-3g
+end
+
+task scf
