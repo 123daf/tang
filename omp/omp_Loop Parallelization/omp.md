@@ -25,7 +25,13 @@
 | `#pragma omp critical` | 临界区保护 | `#pragma omp critical { sum += x; }` |  
 
 ### 2. 调度策略  
-- **`static`**：迭代均匀分配（默认），负载均衡场景  
+- **`static`**：迭代均匀分配（默认），负载均衡场景
+```
+#pragma omp parallel for schedule(static, 16)
+for (int i = 0; i < N; i++) {
+    // 迭代任务（计算均匀）
+}
+``` 
 - **`dynamic`**：动态分配（如 `schedule(dynamic,16)`），任务不均场景  
 - **`guided`**：块大小递减，平衡初始负载  
 
@@ -39,7 +45,14 @@
 - **`reduction`**：自动合并结果（如 `reduction(+:sum)`）  
 
 ### 2. 同步机制  
-- **`barrier`**：线程同步点  
+- **`barrier`**：线程同步点，强制所有线程在指定点同步，确保代码块A被所有线程执行完毕后，才执行代码块B
+```
+  #pragma omp parallel 
+{// 线程并行执行代码块A
+    #pragma omp barrier  // 同步点
+    // 所有线程完成A后，再执行代码块B
+}
+```
 - **`atomic`**：轻量级原子操作  
 
 ---
@@ -62,20 +75,20 @@
 ## 五、矩阵乘法优化案例
 
 ####  问题描述  
-计算 \( C = A \times B \)（\( N \times N \) 矩阵，\( N=1000 \)）
-
+- 计算 \( C = A \times B \)（\( N \times N \) 矩阵，\( N=1000 \)）
+```
 // 转置B矩阵使内存连续访问
-#pragma omp parallel for collapse(2)
+ #pragma omp parallel for collapse(2)
 for (int i = 0; i < N; i++)
-    for (int j = 0; j < N; j++)
+      for (int j = 0; j < N; j++)
         B_transposed[j][i] = B[i][j];
 
- #pragma omp parallel for schedule(dynamic, 16)
-for (int i = 0; i < N; i += BLOCK)
-    for (int j = 0; j < N; j += BLOCK)
-        for (int k = 0; k < N; k++)
-            C[i][j] += A[i][k] * B_transposed[j][k];
-
+#pragma omp parallel for schedule(dynamic, 16)
+    for (int i = 0; i < N; i += BLOCK)
+       for (int j = 0; j < N; j += BLOCK)
+         for (int k = 0; k < N; k++)
+          C[i][j] += A[i][k] * B_transposed[j][k];
+```
 ### 关键优化点
 1. **内存连续访问**：转置B矩阵
 2. **循环合并**：`collapse(2)`提升并行粒度
