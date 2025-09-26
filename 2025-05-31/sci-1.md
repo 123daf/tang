@@ -98,12 +98,12 @@ g++ ${m4D}/main.o -o ${m4D}/main_1 -Wl,-L${m4D} -lparticle -lv3
 -Wl,-L${m4D}：指定链接器搜索库文件的路径为 out/m4。
 -lparticle：链接名为 libparticle.a 的静态库。
 -lv3：链接名为 libv3.a 的静态库。
-
+```
 # sci 4 vtune
 - VTune是性能分析工具，用于分析CPU、GPU、内存等。常见的使用场景包括热点分析、内存访问分析、多线程分析等。
 - 注意vtune分析的得是可执行文件！！！二进制文件不可以！
 1. 使用前先使用source /opt/intel/oneapi/setvars.sh来为vtune的使用配置环境。
-2. 可以用vtune-sever --help 来查看一些vtune相应指令。
+2. 可以用vtune-server --help 来查看一些vtune相应指令。
 3. vtune -collect hotspots ./matrix_cal_mpi 分析cpu热点（matrix_cal_mpi为要分析的文件名）
 4. 启动服务（数据存储到当前目录）
 vtune-server --data-directory .（有个.别漏了）
