@@ -68,7 +68,7 @@ g++ src/particle.cpp -o ${m1D}/particle.o -g -ggdb -O0 -std=c++17 -I./inc -Wall 
 g++ src/v3.cpp -o ${m1D}/v3.o -g -ggdb -O0 -std=c++17 -I./inc -Wall -march=native -c
  ```
  g++ [源文件] -o [输出文件] [编译选项] -c
- ```
+
  -c：仅编译不链接，生成目标文件（.o）。
 -g -ggdb：生成调试信息，支持 GDB 调试。
 -O0：禁用优化（便于调试）。
@@ -98,7 +98,7 @@ g++ ${m4D}/main.o -o ${m4D}/main_1 -Wl,-L${m4D} -lparticle -lv3
 -Wl,-L${m4D}：指定链接器搜索库文件的路径为 out/m4。
 -lparticle：链接名为 libparticle.a 的静态库。
 -lv3：链接名为 libv3.a 的静态库。
-```
+
 # sci 4 vtune
 - VTune是性能分析工具，用于分析CPU、GPU、内存等。常见的使用场景包括热点分析、内存访问分析、多线程分析等。
 - 注意vtune分析的得是可执行文件！！！二进制文件不可以！
